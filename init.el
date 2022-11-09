@@ -54,7 +54,6 @@
     (leaf-keywords-init)))
 
 (provide 'init)
-(setq x-alt-keysym 'meta)
 (leaf leaf-convert :ensure t)
 (leaf cus-edit
   :doc "tools for customizing Emacs and Lisp packages"
@@ -258,7 +257,17 @@
   :ensure t
   :after git-commit with-editor)
 
+(leaf obsidian
+  :doc "Obsidian Notes interface"
+  :req "emacs-27.2" "s-1.12.0" "dash-2.13" "markdown-mode-2.6" "elgrep-1.0.0" "yaml-0.5.1"
+  :tag "convenience" "pkm" "obsidian" "emacs>=27.2"
+  :url "https://github.com./licht1stein/obsidian.el"
+  :added "2022-11-09"
+  :emacs>= 27.2
+  :ensure t
+  :after markdown-mode elgrep yaml)
 
+(define-key global-map (kbd "C-t") 'other-window)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
