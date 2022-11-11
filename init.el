@@ -113,8 +113,8 @@
 (leaf files
   :doc "file input and output commands for Emacs"
   :tag "builtin"
-  :custom `((auto-save-timeout . 15)
-            (auto-save-interval . 60)
+  :custom `((auto-save-timeout . 1)
+            (auto-save-interval . 0)
             (auto-save-file-name-transforms . '((".*" ,(locate-user-emacs-file "backup/") t)))
             (backup-directory-alist . '((".*" . ,(locate-user-emacs-file "backup"))
                                         (,tramp-file-name-regexp . nil)))
@@ -216,6 +216,7 @@
            (company-minimum-prefix-length . 1)
            (company-transformers . '(company-sort-by-occurrence)))
   :global-minor-mode global-company-mode)
+(add-hook 'after-init-hook 'global-company-mode)
 
 (leaf company-c-headers
   :doc "Company mode backend for C/C++ header files"
@@ -268,7 +269,7 @@
   :after markdown-mode elgrep yaml)
 (obsidian-specify-path "~/Documents/Obsidian Vault/")
 (global-obsidian-mode t)
-
+(define-key global-map (kbd "C-o") 'obsidian-hydra/body)
 (define-key global-map (kbd "C-t") 'other-window)
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
