@@ -271,6 +271,12 @@
 (global-obsidian-mode t)
 (define-key global-map (kbd "C-o") 'obsidian-hydra/body)
 (define-key global-map (kbd "C-t") 'other-window)
+
+ (require `auto-save-buffers-enhanced)
+ (setq auto-save-buffers-enhanced-interval 1)
+ (auto-save-buffers-enhanced t)
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
