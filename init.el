@@ -272,9 +272,14 @@
 (define-key global-map (kbd "C-o") 'obsidian-hydra/body)
 (define-key global-map (kbd "C-t") 'other-window)
 
- (require `auto-save-buffers-enhanced)
- (setq auto-save-buffers-enhanced-interval 1)
- (auto-save-buffers-enhanced t)
+(require `auto-save-buffers-enhanced)
+(setq auto-save-buffers-enhanced-interval 1)
+
+(auto-save-buffers-enhanced t)
+(add-to-list 'image-types 'svg)
+(setq inhibit-startup-screen t)
+
+
 
 
 (custom-set-variables
@@ -285,6 +290,7 @@
  '(tool-bar-mode nil)
  '(menu-bar-mode nil)
  '(package-selected-packages (quote (blackout el-get hydra leaf-keywords leaf))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom. ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
