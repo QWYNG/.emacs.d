@@ -258,29 +258,29 @@
   :ensure t
   :after git-commit with-editor)
 
-(leaf obsidian
-  :doc "Obsidian Notes interface"
-  :req "emacs-27.2" "s-1.12.0" "dash-2.13" "markdown-mode-2.6" "elgrep-1.0.0" "yaml-0.5.1"
-  :tag "convenience" "pkm" "obsidian" "emacs>=27.2"
-  :url "https://github.com./licht1stein/obsidian.el"
-  :added "2022-11-09"
-  :emacs>= 27.2
-  :ensure t
-  :after markdown-mode elgrep yaml)
-(obsidian-specify-path "~/Documents/Obsidian Vault/")
-(global-obsidian-mode t)
-(define-key global-map (kbd "C-o") 'obsidian-hydra/body)
-(define-key global-map (kbd "C-t") 'other-window)
-
 (require `auto-save-buffers-enhanced)
 (setq auto-save-buffers-enhanced-interval 1)
 
 (auto-save-buffers-enhanced t)
 (add-to-list 'image-types 'svg)
 (setq inhibit-startup-screen t)
+(setq-default tab-width 2)
 
+(setq load-path (cons "~/.emacs.d/k3-mode.el" load-path))
+(load-library "~/.emacs.d/k3-mode.el")
+(add-to-list 'auto-mode-alist '("\\.k$" . k3-mode)) ;; to launch k3-mode for .k files
 
+(defun copy-from-osx ()
+ (shell-command-to-string "pbpaste"))
 
+(defun paste-to-osx (text &optional push)
+ (let ((process-connection-type nil))
+     (let ((proc (start-process "pbcopy" "*Messages*" "pbcopy")))
+       (process-send-string proc text)
+       (process-send-eof proc))))
+
+(setq interprogram-cut-function 'paste-to-osx)
+(setq interprogram-paste-function 'copy-from-osx)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
