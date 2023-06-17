@@ -1,5 +1,5 @@
 ;;; init.el --- My init.el  -*- lexical-binding: t; -*-
-
+9
 ;; Copyright (C) 2020  Naoya Yamashita
 
 ;; Author: Naoya Yamashita <conao3@gmail.com>
@@ -182,17 +182,6 @@
   :custom ((ivy-prescient-retain-classic-highlighting . t))
   :global-minor-mode t)
 
-(leaf flycheck
-  :doc "On-the-fly syntax checking"
-  :req "dash-2.12.1" "pkg-info-0.4" "let-alist-1.0.4" "seq-1.11" "emacs-24.3"
-  :tag "minor-mode" "tools" "languages" "convenience" "emacs>=24.3"
-  :url "http://www.flycheck.org"
-  :emacs>= 24.3
-  :ensure t
-  :bind (("M-n" . flycheck-next-error)
-         ("M-p" . flycheck-previous-error))
-  :global-minor-mode global-flycheck-mode)
-
 (leaf company
   :doc "Modular text completion framework"
   :req "emacs-24.3"
@@ -207,8 +196,7 @@
           ("M-p" . nil)
           ("C-s" . company-filter-candidates)
           ("C-n" . company-select-next)
-          ("C-p" . company-select-previous)
-          ("<tab>" . company-complete-selection))
+          ("C-p" . company-select-previous))
          (company-search-map
           ("C-n" . company-select-next)
           ("C-p" . company-select-previous)))
@@ -258,6 +246,34 @@
   :ensure t
   :after git-commit with-editor)
 
+(leaf copilot
+  :el-get (copilot
+           :type github
+           :pkgname "zerolfx/copilot.el"
+           )
+  :config
+   (defun my/copilot-tab ()
+    (interactive)
+    (or (copilot-accept-completion)
+        (indent-for-tab-command)))
+
+  (with-eval-after-load 'copilot
+    (define-key copilot-mode-map (kbd "<tab>") #'my/copilot-tab))
+  )
+(global-copilot-mode 1)
+
+
+(leaf flycheck
+  :doc "On-the-fly syntax checking"
+  :req "dash-2.12.1" "pkg-info-0.4" "let-alist-1.0.4" "seq-1.11" "emacs-24.3"
+  :tag "minor-mode" "tools" "languages" "convenience" "emacs>=24.3"
+  :url "http://www.flycheck.org"
+  :emacs>= 24.3
+  :ensure t
+  :bind (("M-n" . flycheck-next-error)
+         ("M-p" . flycheck-previous-error))
+  :global-minor-mode global-flycheck-mode)
+
 (require `auto-save-buffers-enhanced)
 (setq auto-save-buffers-enhanced-interval 1)
 
@@ -269,6 +285,11 @@
 (setq load-path (cons "~/.emacs.d/k3-mode.el" load-path))
 (load-library "~/.emacs.d/k3-mode.el")
 (add-to-list 'auto-mode-alist '("\\.k$" . k3-mode)) ;; to launch k3-mode for .k files
+
+(require 'eglot)
+(add-hook 'ruby-mode-hook 'eglot-ensure)
+
+(global-git-gutter+-mode 1)
 
 (defun copy-from-osx ()
  (shell-command-to-string "pbpaste"))
