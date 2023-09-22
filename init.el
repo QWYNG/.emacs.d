@@ -1,5 +1,5 @@
 ;;; init.el --- My init.el  -*- lexical-binding: t; -*-
-9
+
 ;; Copyright (C) 2020  Naoya Yamashita
 
 ;; Author: Naoya Yamashita <conao3@gmail.com>
@@ -246,6 +246,9 @@
   :ensure t
   :after git-commit with-editor)
 
+(with-eval-after-load 'magit
+  (require 'forge))
+
 (leaf copilot
   :el-get (copilot
            :type github
@@ -274,8 +277,37 @@
          ("M-p" . flycheck-previous-error))
   :global-minor-mode global-flycheck-mode)
 
+(leaf dired-sidebar
+  :bind (("C-x C-n" . dired-sidebar-toggle-sidebar))
+  :ensure t
+  :commands (dired-sidebar-toggle-sidebar)
+  :init
+    (add-hook 'dired-sidebar-mode-hook
+            (lambda ()
+              (unless (file-remote-p default-directory)
+                (auto-revert-mode))))
+  :config
+  (push 'toggle-window-split dired-sidebar-toggle-hidden-commands)
+  (push 'rotate-windows dired-sidebar-toggle-hidden-commands)
+  (setq dired-sidebar-subtree-line-prefix "__")
+  (setq dired-sidebar-use-term-integration t)
+  (setq dired-sidebar-use-custom-font t))
+
+(leaf dired-subtree
+  :ensure t
+  :cponfig
+  :bind (dired-mode-map
+             ("i" . dired-subtree-insert)
+             (";" . dired-subtree-remove))
+  )
+
 (require `auto-save-buffers-enhanced)
 (setq auto-save-buffers-enhanced-interval 1)
+
+(leaf lsp-mode
+  :ensure t
+  )
+
 
 (auto-save-buffers-enhanced t)
 (add-to-list 'image-types 'svg)

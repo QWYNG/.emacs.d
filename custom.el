@@ -4,7 +4,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(menu-bar-mode nil)
- '(package-selected-packages '(git-gutter+ blackout el-get hydra leaf-keywords leaf))
+ '(package-selected-packages '(sqlite3 blackout el-get hydra leaf-keywords leaf))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
