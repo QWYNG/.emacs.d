@@ -344,6 +344,9 @@
  '(menu-bar-mode nil)
  '(package-selected-packages (quote (blackout el-get hydra leaf-keywords leaf))))
 
+(setq sqlformat-command 'pgformatter)
+(setq sqlformat-args '("-s2" "-g"))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom. ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
