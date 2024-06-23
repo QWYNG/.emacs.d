@@ -54,6 +54,34 @@
     (leaf-keywords-init)))
 
 (provide 'init)
+(defvar my-frame-settings-file "~/.emacs.d/frame-settings.el"
+  "File to save/load frame settings based on default-frame-alist.")
+
+(defun my-save-frame-settings ()
+  (let* ((current-font (frame-parameter nil 'font))
+         (current-height (frame-height))
+         (current-width (frame-width)))
+    (with-temp-buffer
+      (insert
+       (concat
+        "(setq default-frame-alist '("
+        "(width . " (int-to-string current-width) ")"
+        "(height . " (int-to-string current-height) ")"
+        "(font . \"" current-font "\")"
+        "))\n"))
+      (write-file my-frame-settings-file))))
+
+(defun my-load-frame-settings ()
+  (when (file-exists-p my-frame-settings-file)
+    (load-file my-frame-settings-file)))
+
+;; Emacs起動時にサイズとフォントを読み込む
+(my-load-frame-settings)
+
+;; Emacs終了時にサイズとフォントを保存する
+(add-hook 'kill-emacs-hook 'my-save-frame-settings)
+
+
 (leaf leaf-convert :ensure t)
 (leaf cus-edit
   :doc "tools for customizing Emacs and Lisp packages"
