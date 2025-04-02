@@ -66,7 +66,7 @@ The DWIM behaviour of this command is as follows:
 
 (let ((mono-spaced-font "Monospace")
       (proportionately-spaced-font "Sans"))
-  (set-face-attribute 'default nil :family mono-spaced-font :height 100)
+  (set-face-attribute 'default nil :family mono-spaced-font :height 120)
   (set-face-attribute 'fixed-pitch nil :family mono-spaced-font :height 2.0)
   (set-face-attribute 'variable-pitch nil :family proportionately-spaced-font :height 2.0))
 
@@ -184,5 +184,7 @@ The DWIM behaviour of this command is as follows:
           (lambda ()
             (set (make-local-variable 'face-remapping-alist)
                  '((default :height 3.0)))))
-(set-face-attribute 'font-lock-comment-face nil :height 160)
+
+(auto-save-visited-mode 1)
+(setq auto-save-visited-interval 2)
 
