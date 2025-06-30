@@ -5,12 +5,8 @@
 (require 'package)
 (add-to-list 'package-archives
              '("melpa" . "https://melpa.org/packages/") t)
-(package-initialize)
 
-;; best theme
 (load-theme 'kanagawa-wave t)
-
-;; いい感じのダッシュボード
 (require 'dashboard)
 (dashboard-setup-startup-hook)
 
